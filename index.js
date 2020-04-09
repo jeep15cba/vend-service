@@ -25,6 +25,11 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 require('./routes/vendRoutes')(app);
 
+app.get('/auth/google', passport.authenticate ('google', {
+    scope: ['profile', 'email']
+    })
+);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
