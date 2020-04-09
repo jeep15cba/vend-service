@@ -1,64 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 const keys = require('./config/keys');
-const AuthTokenStrategy = require('passport-auth-token').Strategy;
+
 require('./models/User');
+require('./models/Product');
+require('./models/Customer');
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
+app.use(express.json());
+app.use(
+    cookieSession({
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        keys: [keys.cookieKey]
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/vendRoutes')(app);
 
-
-
-//passport.use('authtoken', new AuthTokenStrategy(
-//  function(token, done) {
-//    AccessToken.findOne({
-//      id: token
-//    }, function(error, accessToken) {
-//      if (error) {
-//        return done(error);
-//      }
-//
-//      if (accessToken) {
-//        if (!token.isValid(accessToken)) {
-//          return done(null, false);
-//        }
-//
-//        User.findOne({
-//          id: accessToken.userId
-//        }, function(error, user) {
-//          if (error) {
-//            return done(error);
-//          }
-//
-//          if (!user) {
-//            return done(null, false);
-//          }
-//
-//          return done(null, user);
-//        });
-//      } else {
-//        return done(null);
-//      }
-//    });
-//  }
-//));
-//
-//app.get('/auth/vend',
-//  passport.authenticate(
-//    'authtoken',
-//    {
-//      session: false,
-//      optional: false
-//    }
-//  ),
-//  function(req, res) {
-//    res.redirect('/auth/vend/callback');
-//  }
-//);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
