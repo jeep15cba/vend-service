@@ -1,5 +1,6 @@
 var request = require('request-promise');
 const mongoose = require('mongoose');
+const VendCtrl = require('../controllers/vend-ctrl');
 
 const Product = mongoose.model('products');
 const Customer = mongoose.model('customers');
@@ -64,4 +65,5 @@ module.exports = (app) => {
             console.log(error)
         });
     });
+    
 };
