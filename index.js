@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 require('./models/User');
 require('./models/Product');
 require('./models/Customer');
+require('./models/Job');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
@@ -27,16 +28,17 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/api', vendRouter);
+//app.use('/api', vendRouter);
 
 require('./routes/authRoutes')(app);
 require('./routes/vendRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/jobRoutes')(app);
 
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('new-client/build'));
-    app.use('/api/*', vendRouter);
+//    app.use('/api/*', vendRouter);
     
     const path = require('path');
     app.get('*', (req, res) => {
