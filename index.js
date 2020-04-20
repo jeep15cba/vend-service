@@ -36,7 +36,7 @@ require('./routes/billingRoutes')(app);
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('new-client/build'));
-    app.use('/api', vendRouter);
+    app.use('/api/*', vendRouter);
     
     const path = require('path');
     app.get('*', (req, res) => {
