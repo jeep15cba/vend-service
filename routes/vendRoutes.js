@@ -11,7 +11,7 @@ module.exports = (app) => {
     const customerAPIUrl = "https://adamyoungtest.vendhq.com/api/customers";
     const productAPIUrl = "https://adamyoungtest.vendhq.com/api/products";
     
-    app.get('/api/customers', function(req, res, next) {
+    app.get('/api/customers', requireLogin, function(req, res, next) {
         request({
           url: customerAPIUrl,
           method: 'GET',
@@ -36,7 +36,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/api/products', (req, res) => {
+    app.get('/api/products', requireLogin, (req, res) => {
         request({
           url: productAPIUrl,
           method: 'GET',

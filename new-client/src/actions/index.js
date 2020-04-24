@@ -2,12 +2,14 @@ import axios from 'axios';
 import { FETCH_PRODUCTS, FETCH_CUSTOMERS, FETCH_USER } from './types';
 
 export const fetchProducts = () => async dispatch => {
+    await axios.get('/api/products');
     const res = await axios.get('/api/getproducts');
     
     dispatch({ type: FETCH_PRODUCTS, payload: res.data.data });
 };
 
 export const fetchCustomers = () => async dispatch => {
+    await axios.get('/api/customers');
     const res = await axios.get('/api/getcustomers');
     
     dispatch({ type: FETCH_CUSTOMERS, payload: res.data.data });

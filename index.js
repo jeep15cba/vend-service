@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 require('./models/User');
 require('./models/Product');
 require('./models/Customer');
+require('./models/Survey');
 require('./models/Job');
 require('./services/passport');
 
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 require('./routes/authRoutes')(app);
 require('./routes/vendRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 require('./routes/jobRoutes')(app);
 
 
